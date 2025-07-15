@@ -1,18 +1,16 @@
-# data.py
+import data
 
-# URL of the Urban Routes application
-BASE_URL = "https://cnt-59c08492-c002-4ce8-91fe-2d43434e2332.containerhub.tripleten-services.com/" # Replace with your actual app URL if different
-
-# Addresses
-ADDRESS_FROM = "Улица Льва Толстого, 16"
-ADDRESS_TO = "Проспект Андропова, 18"
-
-# Phone number (use a test number if possible, or a real one that can receive SMS)
-PHONE_NUMBER = "+79991234567" # IMPORTANT: Replace with a valid test phone number
-
-# Credit Card Details (use test card details, DO NOT use real card details)
-CARD_NUMBER = "1234 5678 9012 3456" # Example test card number
-CARD_CVV = "123" # Example test CVV
-
-# Driver Comment
-DRIVER_COMMENT = "Пожалуйста, будьте осторожны с моими морожеными!" # "Please be careful with my ice creams!"
+def test_full_order_flow(self):
+    page = self.page
+    page.set_address(data.FROM_ADDRESS, data.TO_ADDRESS)
+    page.click_call_taxi()
+    page.select_supportive_plan()
+    page.enter_phone_number(data.PHONE_NUMBER)
+    code = retrieve_phone_code()
+    page.enter_sms_code(code)
+    page.add_credit_card(data.CARD_NUMBER, data.CVV_CODE)
+    page.leave_driver_comment(data.DRIVER_COMMENT)
+    page.order_blanket_and_handkerchiefs()
+    page.order_ice_cream(count=data.ICE_CREAM_COUNT)
+    page.submit_order()
+    assert page.is_car_search_modal_displayed()
