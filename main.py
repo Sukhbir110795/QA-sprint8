@@ -1,12 +1,10 @@
-import sys
-import os
-sys.path.append(os.path.dirname(__file__))
-
 import pytest
 from selenium import webdriver
 from selenium.webdriver import DesiredCapabilities
+import helpers
+import data
 from pages import UrbanRoutesPage
-from helpers import retrieve_phone_code, is_url_reachable
+
 
 class TestUrbanRoutes:
 
@@ -16,28 +14,50 @@ class TestUrbanRoutes:
         capabilities["goog:loggingPrefs"] = {'performance': 'ALL'}
         cls.driver = webdriver.Chrome(desired_capabilities=capabilities)
 
-        server_url = "https://cnt-59c08492-c002-4ce8-91fe-2d43434e2332.containerhub.tripleten-services.com"
-        if not is_url_reachable(server_url):
-            raise Exception("Server is not reachable")
+        # Open the app URL
+        cls.driver.get("https://cnt-159fc465-580d-4de5-9a1a-146a4fa61bf1.containerhub.tripleten-services.com/")
 
-        cls.driver.get(server_url)
-        cls.page = UrbanRoutesPage(cls.driver)
+        # Optional check
+        if not helpers.is_url_reachable():
+            raise Exception("Urban Routes app is not reachable.")
 
     @classmethod
     def teardown_class(cls):
         cls.driver.quit()
 
-    def test_full_order_flow(self):
-        page = self.page
-        page.set_address("123 Main St", "456 Elm St")
+    def test_order_supportive_plan(self):
+        page = UrbanRoutesPage(self.driver)
+        page.set_address(data.FROM_ADDRESS, data.TO_ADDRESS)
         page.click_call_taxi()
         page.select_supportive_plan()
-        page.enter_phone_number("+1234567890")
-        code = retrieve_phone_code()
-        page.enter_sms_code(code)
-        page.add_credit_card("4242 4242 4242 4242", "123")
-        page.leave_driver_comment("Please be quick and friendly.")
-        page.order_blanket_and_handkerchiefs()
-        page.order_ice_cream(count=2)
-        page.submit_order()
-        assert page.is_car_search_modal_displayed()
+        assert "active" in self.driver.find_element(*page.active_tariff).get_attribute("class")
+
+    def test_phone_authentication(self):
+        page = UrbanRoutesPage(self.driver)
+        page.enter_phone(data.PHONE_NUMBER)
+        code = helpers.retrieve_phone_code(self.driver)
+        page.enter_code(code)
+
+    def test_add_card(self):
+        page = UrbanRoutesPage(self.driver)
+        page.add_card(data.CARD_NUMBER, data.CVV)
+
+    def test_write_comment(self):
+        page = UrbanRoutesPage(self.driver)
+        page.write_comment(data.DRIVER_COMMENT)
+
+    def test_blanket_selection(self):
+        page = UrbanRoutesPage(self.driver)
+        page.toggle_blanket()
+        assert page.is_blanket_selected() is True
+
+    def test_order_ice_cream(self):
+        page = UrbanRoutesPage(self.driver)
+        page.order_ice_cream()
+        assert page.get_ice_cream_count() == "2"
+
+    def test_final_order(self):
+        page = UrbanRoutesPage(self.driver)
+        page.write_comment(data.DRIVER_COMMENT)
+        page.place_order()
+        assert page.is_car_search_modal_visible()
