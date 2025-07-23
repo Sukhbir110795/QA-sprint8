@@ -1,11 +1,6 @@
 import time
-import requests
 from selenium.webdriver.remote.webdriver import WebDriver
-
-# Replace this with your container URL if needed
-APP_URL = "https://cnt-159fc465-580d-4de5-9a1a-146a4fa61bf1.containerhub.tripleten-services.com/"
-
-def is_url_reachable(url: str = APP_URL) -> bool:
+def is_url_reachable(url) -> bool:
     """
     Checks if the given URL is reachable.
     """

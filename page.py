@@ -7,9 +7,9 @@ class UrbanRoutesPage:
         self.driver = driver
 
     # === LOCATORS ===
-    from_input = (By.ID, "from-input")
-    to_input = (By.ID, "to-input")
-    call_taxi_btn = (By.XPATH, "//button[contains(@class, 'order__button')]")
+    from_input = (By.ID, "from")
+    to_input = (By.ID, "to")
+    call_taxi_btn = (By.XPATH, '//*[@id="root"]/div/div[3]/div[3]/div[1]/div[3]/div[1]/button')
     supportive_plan = (
         By.XPATH, "//div[contains(@class, 'tcard') and .//div[text()='Supportive']]"
     )
@@ -32,9 +32,7 @@ class UrbanRoutesPage:
 
     # === METHODS ===
     def set_address(self, from_addr, to_addr):
-        self.driver.find_element(*self.from_input).clear()
         self.driver.find_element(*self.from_input).send_keys(from_addr)
-        self.driver.find_element(*self.to_input).clear()
         self.driver.find_element(*self.to_input).send_keys(to_addr)
 
     def click_call_taxi(self):

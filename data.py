@@ -1,7 +1,13 @@
-FROM_ADDRESS = "123 Main St"
-URBAN_ROUTES_URL = '{https://cnt-ba499ee6-39d9-4576-8dfc-ae3846838a83.containerhub.tripleten-services.com/}'
-TO_ADDRESS = "456 Park Ave"
-PHONE_NUMBER = "+1234567890"
-CARD_NUMBER = "4111111111111111"
-CVV = "123"
-DRIVER_COMMENT = "Please hurry, I’m late!"
+URBAN_ROUTES_URL = "https://cnt-ffa3107f-71ef-423e-a93b-5e1d175fbcfe.containerhub.tripleten-services.com/"
+
+PHONE_NUMBER = "+1 123 123 12 34"
+
+CARD_NUMBER = "1234 5678 9012 3456"
+
+CARD_CODE = "111"
+
+MESSAGE_FOR_DRIVER = "Stop at the juice bar, please"
+
+ADDRESS_FROM = "East 2nd Street, 601"
+
+ADDRESS_TO = "1300 1st St"
