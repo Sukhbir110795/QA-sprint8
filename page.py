@@ -1,6 +1,8 @@
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 
+import data
+
 
 class UrbanRoutesPage:
     def __init__(self, driver):
@@ -34,6 +36,11 @@ class UrbanRoutesPage:
     def set_address(self, from_addr, to_addr):
         self.driver.find_element(*self.from_input).send_keys(from_addr)
         self.driver.find_element(*self.to_input).send_keys(to_addr)
+    def get_from_address(self):
+        return self.driver.find_element(*self.from_input).get_property('value')
+    def get_to_address(self):
+        return self.driver.find_element(*self.to_input).get_property('value')
+
 
     def click_call_taxi(self):
         self.driver.find_element(*self.call_taxi_btn).click()
@@ -93,4 +100,9 @@ class UrbanRoutesPage:
         return self.driver.find_element(*self.comment_box).get_attribute("value") != ""
 
     def is_route_set(self):
-        pass
+        fromEntered = self.get_from_address() == data.ADDRESS_FROM
+        toEntered = self.get_to_address() == data.ADDRESS_TO
+        if fromEntered and toEntered:
+            return True
+        else:
+            return False
