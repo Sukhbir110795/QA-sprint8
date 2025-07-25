@@ -19,7 +19,11 @@ class TestUrbanRoutes:
         else:
             print('url is reachable')
 
-
+    def test_set_route(self):
+        self.driver.get(data.URBAN_ROUTES_URL)
+        page = UrbanRoutesPage(self.driver)
+        page.set_address(data.ADDRESS_FROM, data.ADDRESS_TO)
+        assert page.is_route_set()
     def test_order_supportive_plan(self):
         self.driver.get(data.URBAN_ROUTES_URL)
         page = UrbanRoutesPage(self.driver)
@@ -31,6 +35,10 @@ class TestUrbanRoutes:
     def test_phone_authentication(self):
         self.driver.get(data.URBAN_ROUTES_URL)
         page = UrbanRoutesPage(self.driver)
+        # Assuming address is set and call taxi is clicked from previous tests if this were part of a full flow.
+        # For standalone execution of this test, you might need to add these steps:
+        # page.set_address(data.ADDRESS_FROM, data.ADDRESS_TO)
+        # page.click_call_taxi()
         page.enter_phone(data.PHONE_NUMBER)
         code = helper.retrieve_phone_code(self.driver)
         page.enter_code(code)

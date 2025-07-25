@@ -1,4 +1,4 @@
-URBAN_ROUTES_URL = "https://cnt-ffa3107f-71ef-423e-a93b-5e1d175fbcfe.containerhub.tripleten-services.com/"
+URBAN_ROUTES_URL = "https://cnt-4d279c32-b2c3-4164-9d2a-e4e43e114fd4.containerhub.tripleten-services.com/"
 
 PHONE_NUMBER = "+1 123 123 12 34"
 

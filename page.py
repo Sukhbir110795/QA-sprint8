@@ -91,3 +91,6 @@ class UrbanRoutesPage:
 
     def is_comment_saved(self):
         return self.driver.find_element(*self.comment_box).get_attribute("value") != ""
+
+    def is_route_set(self):
+        pass
